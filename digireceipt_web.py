@@ -1,5 +1,10 @@
 import streamlit as st
 from datetime import datetime
+from io import BytesIO
+from reportlab.lib.pagesizes import A4
+from reportlab.pdfgen import canvas
+from reportlab.lib.units import mm
+from PIL import Image
 
 st.set_page_config(page_title="DigiReceipt", layout="centered")
 
@@ -8,7 +13,7 @@ if "invoice_count" not in st.session_state:
     st.session_state.invoice_count = 0
 
 st.title("🧾 DigiReceipt Invoice Generator")
-st.markdown("سادہ رسید بنانے والا موبائل ایپ۔ تفصیلات درج کریں، رسید بنائیں، اور ڈاؤنلوڈ کریں۔")
+st.markdown("سادہ رسید بنانے والا موبائل ایپ۔ تفصیلات درج کریں، رسید بنائیں، اور PDF ڈاؤنلوڈ کریں۔")
 
 # 🖼️ Optional Logo Upload
 logo = st.file_uploader("🔗 اپنی دکان کا لوگو اپلوڈ کریں (اختیاری)", type=["png", "jpg", "jpeg"])
@@ -24,6 +29,10 @@ with st.form("invoice_form"):
     address = st.text_input("Customer Address / پتہ")
     phone = st.text_input("Phone Number / فون نمبر")
     signature = st.text_input("Signature / دستخط")
+
+    # 🧾 Editable Invoice Number
+    default_invoice_no = f"INV-{datetime.today().strftime('%Y%m%d')}-{st.session_state.invoice_count + 1}"
+    invoice_no = st.text_input("Invoice Number / رسید نمبر", value=default_invoice_no)
 
     warranty_note = st.selectbox("Warranty Note / وارنٹی", [
         "14-Day Return Policy",
@@ -47,42 +56,68 @@ with st.form("invoice_form"):
 if submitted:
     st.session_state.invoice_count += 1
     date = datetime.today().strftime("%d-%b-%Y")
-    item_lines = "No  Item Name           Price      Qty   Total\n"
-    item_lines += "------------------------------------------------\n"
-    total = 0
+    total = sum(item['price'] * item['quantity'] for item in items)
+
+    # 📄 Generate PDF
+    buffer = BytesIO()
+    pdf = canvas.Canvas(buffer, pagesize=A4)
+    width, height = A4
+
+    y = height - 40
+
+    if logo:
+        img = Image.open(logo)
+        img_width = 50 * mm
+        img_height = img.height / img.width * img_width
+        pdf.drawInlineImage(img, 40, y - img_height, width=img_width, height=img_height)
+        y -= img_height + 10
+
+    pdf.setFont("Helvetica-Bold", 14)
+    pdf.drawString(40, y, f"{vendor_name.upper()} - INVOICE")
+    y -= 20
+
+    pdf.setFont("Helvetica", 10)
+    pdf.drawString(40, y, f"Invoice No: {invoice_no}")
+    pdf.drawString(300, y, f"Date: {date}")
+    y -= 15
+    pdf.drawString(40, y, f"Customer: {customer_name}")
+    pdf.drawString(300, y, f"Status: {status}")
+    y -= 15
+    pdf.drawString(40, y, f"Tax Number: {tax_number}")
+    pdf.drawString(40, y - 15, f"Address: {address}")
+    pdf.drawString(300, y - 15, f"Phone: {phone}")
+    y -= 35
+
+    pdf.setFont("Helvetica-Bold", 10)
+    pdf.drawString(40, y, "No  Item Name           Price     Qty     Total")
+    y -= 10
+    pdf.line(40, y, 550, y)
+    y -= 15
+
+    pdf.setFont("Helvetica", 10)
     for i, item in enumerate(items, start=1):
         line_total = item['price'] * item['quantity']
-        total += line_total
-        item_lines += f"{i:<3} {item['name']:<20} {item['price']:>8.2f}   x {item['quantity']:<3} = {line_total:>8.2f}\n"
+        pdf.drawString(40, y, f"{i:<3} {item['name']:<20} {item['price']:>7.2f}   x {item['quantity']}   = {line_total:>7.2f}")
+        y -= 15
 
-    invoice = f"""
-    ----------------------------------
-              🧾 INVOICE
-         {vendor_name.upper()}
-    ----------------------------------
-    Customer     : {customer_name}
-    Tax Number   : {tax_number}
-    Date         : {date}
-    Status       : {status}
+    y -= 10
+    pdf.setFont("Helvetica-Bold", 10)
+    pdf.drawString(40, y, f"Total Amount: {total:.2f}")
+    y -= 15
+    pdf.setFont("Helvetica", 10)
+    pdf.drawString(40, y, f"Warranty: {warranty_note}")
+    pdf.drawString(300, y, f"Signature: {signature}")
+    y -= 30
+    pdf.drawString(40, y, "Thank you for your business!")
 
-    Items:
-{item_lines}
-    ----------------------------------
-    Total Amount : {total:.2f}
-    Warranty     : {warranty_note}
-    Signature    : {signature}
-    ----------------------------------
-    Thank you for your business!
-    Address      : {address}
-    Phone        : {phone}
-    ----------------------------------
-    """
+    pdf.showPage()
+    pdf.save()
+    buffer.seek(0)
 
-    st.text_area("📄 Invoice Preview / رسید کا جائزہ", invoice, height=400)
-    st.download_button("📥 Download Invoice / رسید ڈاؤنلوڈ کریں", invoice, file_name=f"Invoice_{customer_name.replace(' ', '_')}.txt")
+    st.download_button("📥 Download PDF Invoice / رسید PDF میں ڈاؤنلوڈ کریں", buffer, file_name=f"{invoice_no.replace(' ', '_')}.pdf")
 
     # 📤 Email Share Option
-    st.markdown(f"[📤 Send via Email](mailto:?subject=Invoice&body={invoice.replace(' ', '%20')})")
+    st.markdown(f"[📤 Send via Email](mailto:?subject=Invoice&body=Invoice%20for%20{customer_name}%20-%20Total%20{total:.2f})")
 
 # 📊 Show Basic Analytics
 st.markdown("---")
