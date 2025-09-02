@@ -1,47 +1,37 @@
-🧾 DigiReceipt: Invoices Made Simple
-DigiReceipt is a lightweight, mobile-friendly invoice generator built for freelancers, shopkeepers, and microbusinesses—especially those working in low-resource environments. No installation, no coding, no hassle. Just open the app, fill in the details, and download your invoice.
+# DigiReceipt — Mobile-First Invoice Generator
 
-🌍 Why DigiReceipt?
-Because not everyone has a laptop, Python, or time to figure things out. DigiReceipt runs directly in your browser—on Android, iOS, or desktop—and speaks your language. It’s designed for:
+**Built for freelancers, shopkeepers, and microbusinesses who live on mobile—not spreadsheets.**
 
-📱 Mobile-first users
+DigiReceipt is a simple, Urdu-friendly invoice generator designed for real-world users. Whether you're a vendor in Punjab or a freelancer abroad, this tool lets you create and download professional invoices instantly—no installation, no login, no hassle.
 
-🧑‍🎓 Non-technical audiences
+---
 
-🛍️ Local vendors and service providers
+## 🌟 Features
 
-🇵🇰 Urdu-speaking communities
+- 📱 Mobile-first design (Android, iOS, desktop)
+- 🧾 Editable invoice number
+- 🖼️ Optional shop logo upload (embedded in PDF)
+- 🇵🇰 Urdu-friendly labels and onboarding
+- 📤 Email sharing option
+- 📊 Invoice counter for basic analytics
+- 📄 PDF download with clean formatting
 
-🚀 Features
-Instant invoice generation
+---
 
-Urdu-friendly labels and layout
+## 🚀 Try It Live
 
-Works on Android, iOS, and desktop
+👉 [Click here to open DigiReceipt](https://digireceipt-xguxiwdpoajodckskewksq.streamlit.app)
 
-No login, no setup, no downloads
+No installation required. Just open the link, fill in your details, and download your invoice.
 
-Download invoice as .txt file
+---
 
-Optional warranty and payment status fields
+## 📦 Requirements (for local use)
 
-🛠️ How to Use
-Open the app in your browser
+To run DigiReceipt locally, install:
 
-Fill in vendor and customer details
-
-Add items, prices, and quantities
-
-Click “Generate Invoice”
-
-Preview and download your receipt
-
-📦 Built With
-Python
-
-Streamlit
-
-Empathy and real-world feedback
-
-🤝 Made for the Community
-DigiReceipt was built with love and purpose by Muhammad Ahmad, a systems thinker and product architect focused on practical relief. It’s part of a broader mission to empower freelancers and microbusinesses with tools that actually fit their lives.
+```bash
+pip install streamlit reportlab Pillow
+streamlit run digireceipt_web.py
+🤝 About the Creator
+Muhammad Ahmad — Systems thinker and product architect from Punjab, focused on practical relief and mobile-first empowerment. DigiReceipt is part of a broader mission to build tools that fit the lives of real users—not the other way around
