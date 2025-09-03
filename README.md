@@ -1,4 +1,4 @@
-# DigiReceipt — Mobile-First Invoice Generator
+<img width="641" height="451" alt="image" src="https://github.com/user-attachments/assets/a6c24781-60f0-4e96-ab2a-be1a27b08be3" /># DigiReceipt — Mobile-First Invoice Generator
 
 **Built for freelancers, shopkeepers, and microbusinesses who live on mobile—not spreadsheets.**
 
@@ -19,8 +19,8 @@ DigiReceipt is a simple, Urdu-friendly invoice generator designed for real-world
 ---
 
 ## 🚀 Try It Live
-
 👉 [Click here to open DigiReceipt](https://digireceipt-xguxiwdpoajodckskewksq.streamlit.app)
+
 
 No installation required. Just open the link, fill in your details, and download your invoice.
 
