@@ -4,23 +4,30 @@
 
 DigiReceipt is a simple, Urdu-friendly invoice generator designed for real-world users. Whether you're a vendor in Punjab or a freelancer abroad, this tool lets you create and download professional invoices instantly—no installation, no login, no hassle.
 
----
+DigiReceipt – Early Development Version 🚧
 
-## 🌟 Features
+This repository contains an early prototype of DigiReceipt, created to test and refine features before the public launch.
 
-- 📱 Mobile-first design (Android, iOS, desktop)
-- 🧾 Editable invoice number
-- 🖼️ Optional shop logo upload (embedded in PDF)
-- 🇵🇰 Urdu-friendly labels and onboarding
-- 📤 Email sharing option
-- 📊 Invoice counter for basic analytics
-- 📄 PDF download with clean formatting
+👉 For the official, up-to-date version, please visit:
+🔗 DigiReceipt Main Repository
 
----
+Why DigiReceipt?
 
-## 🚀 Try It Live
-👉 [Click here to open DigiReceipt](https://digireceipt-xguxiwdpoajodckskewksq.streamlit.app)
+Freelancers, NGOs, and service providers often face:
 
+⏳ Delayed payments
+
+❓ Disputes & lack of clarity
+
+📱 Complicated tools not designed for mobile-first use
+
+DigiReceipt was built with empathy to solve these pain points by offering:
+
+✅ Transparent, simple, and professional receipts
+
+✅ Mobile-first design for easy use anywhere
+
+✅ Tools made for trust, not profit
 
 No installation required. Just open the link, fill in your details, and download your invoice.
 
