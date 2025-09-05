@@ -30,7 +30,7 @@ DigiReceipt was built with empathy to solve these pain points by offering:
 ✅ Tools made for trust, not profit
 
 No installation required. Just open the link, fill in your details, and download your invoice.
-
+https://digireceipt-xguxiwdpoajodckskewksq.streamlit.app/
 ---
 
 ## 📦 Requirements (for local use)
